@@ -11,23 +11,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List options = ["pedra", "papel", "tesoura"];
-  String _message = "Sua jogada!";
+  String _message = " ";
+  String _imagePath = "images/default.png";
 
   void _play(String choice) {
     int i = Random().nextInt(options.length);
     String randomChoice = options[i];
+    this._imagePath = "images/" + randomChoice + ".png";
     print("Click " + choice + " random " + randomChoice);
 
     if ((choice == "pedra" && randomChoice == "tesoura") ||
         (choice == "papel" && randomChoice == "pedra") ||
         (choice == "tesoura" && randomChoice == "papel")) {
-      print("Jogador ganhou!");
+      setState(() {
+        _message = "Você ganhou!";
+      });
     } else if ((choice == "tesoura" && randomChoice == "pedra") ||
         (choice == "pedra" && randomChoice == "papel") ||
         (choice == "papel" && randomChoice == "tesoura")) {
-      print("Computador ganhou!");
+      setState(() {
+        _message = "Você perdeu!";
+      });
     } else {
-      print("Empate!");
+      setState(() {
+        _message = "Empate!";
+      });
     }
   }
 
@@ -43,7 +51,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.only(top: 32, bottom: 16),
               child: Text(
-                _message,
+                "Sua jogada!",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -78,7 +86,27 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Image.asset("images/default.png", height: 130),
+            Image.asset(_imagePath, height: 130),
+            Padding(
+              padding: EdgeInsets.only(top: 32, bottom: 16),
+              child: Text(
+                "Resultado: ",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 32, bottom: 16),
+              child: Text(
+                _message,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ],
         ),
       ),
