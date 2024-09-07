@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,8 +10,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void _play() {
-    print("Click");
+  List options = ["pedra", "papel", "tesoura"];
+
+  void _play(String choice) {
+    int i = Random().nextInt(options.length);
+    print("Click " + choice + " random " + i.toString());
   }
 
   @override
@@ -36,15 +41,15 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => _play(),
+                  onTap: () => _play("pedra"),
                   child: Image.asset("images/pedra.png", height: 100),
                 ),
                 GestureDetector(
-                  onTap: () => _play(),
+                  onTap: () => _play("papel"),
                   child: Image.asset("images/papel.png", height: 100),
                 ),
                 GestureDetector(
-                  onTap: () => _play(),
+                  onTap: () => _play("tesoura"),
                   child: Image.asset("images/tesoura.png", height: 100),
                 ),
               ],
