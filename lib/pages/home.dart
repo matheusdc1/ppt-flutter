@@ -8,6 +8,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void _play() {
+    print("Click");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +32,21 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset("images/pedra.png", height: 100),
-                Image.asset("images/papel.png", height: 100),
-                Image.asset("images/tesoura.png", height: 100),
+                GestureDetector(
+                  onTap: () => _play(),
+                  child: Image.asset("images/pedra.png", height: 100),
+                ),
+                GestureDetector(
+                  onTap: () => _play(),
+                  child: Image.asset("images/papel.png", height: 100),
+                ),
+                GestureDetector(
+                  onTap: () => _play(),
+                  child: Image.asset("images/tesoura.png", height: 100),
+                ),
               ],
             ),
             Padding(
