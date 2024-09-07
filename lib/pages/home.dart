@@ -11,10 +11,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List options = ["pedra", "papel", "tesoura"];
+  String _message = "Sua jogada!";
 
   void _play(String choice) {
     int i = Random().nextInt(options.length);
-    print("Click " + choice + " random " + i.toString());
+    String randomChoice = options[i];
+    print("Click " + choice + " random " + randomChoice);
+
+    if ((choice == "pedra" && randomChoice == "tesoura") ||
+        (choice == "papel" && randomChoice == "pedra") ||
+        (choice == "tesoura" && randomChoice == "papel")) {
+      print("Jogador ganhou!");
+    } else if ((choice == "tesoura" && randomChoice == "pedra") ||
+        (choice == "pedra" && randomChoice == "papel") ||
+        (choice == "papel" && randomChoice == "tesoura")) {
+      print("Computador ganhou!");
+    } else {
+      print("Empate!");
+    }
   }
 
   @override
@@ -29,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.only(top: 32, bottom: 16),
               child: Text(
-                "Sua jogada!",
+                _message,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
