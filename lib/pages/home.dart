@@ -14,6 +14,7 @@ class _HomePageState extends State<HomePage> {
   String _imagePath = "images/default.png";
   int _playerScore = 0;
   int _computerScore = 0;
+  Color _messageColor = Colors.black;
 
   void _play(String choice) {
     int i = Random().nextInt(options.length);
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
         (choice == "tesoura" && randomChoice == "papel")) {
       setState(() {
         _message = "Você ganhou!";
+        _messageColor = Colors.green;
         _playerScore++;
       });
     } else if ((choice == "tesoura" && randomChoice == "pedra") ||
@@ -33,11 +35,13 @@ class _HomePageState extends State<HomePage> {
         (choice == "papel" && randomChoice == "tesoura")) {
       setState(() {
         _message = "Você perdeu!";
+        _messageColor = Colors.red;
         _computerScore++;
       });
     } else {
       setState(() {
         _message = "Empate!";
+        _messageColor = Colors.blue;
       });
     }
   }
@@ -107,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  color: _messageColor,
                 ),
               ),
             ),
