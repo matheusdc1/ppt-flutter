@@ -25,6 +25,8 @@ flutter:
     - images/pedra.png
     - images/papel.png
     - images/tesoura.png
+    - images/background.png
+    - images/moldura.png
 
   fonts:
     - family: Minecraftia
