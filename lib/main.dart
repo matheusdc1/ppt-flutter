@@ -5,6 +5,7 @@ void main() {
   runApp(MaterialApp(
     title: "Pedra, papel e tesoura",
     debugShowCheckedModeBanner: false,
+    theme: ThemeData(fontFamily: 'Minecraftia'),
     home: HomePage(),
   ));
 }
