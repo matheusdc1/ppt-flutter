@@ -1,5 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../components/game_buttons.dart';
+import '../game_logic.dart';
+import '../components/result_message.dart';
+import '../components/score_display.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,18 +27,15 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _imagePath = "images/" + randomChoice + ".png";
       _computerChoice = randomChoice;
-      print("Click " + choice + " random " + randomChoice);
 
-      if ((choice == "pedra" && randomChoice == "tesoura") ||
-          (choice == "papel" && randomChoice == "pedra") ||
-          (choice == "tesoura" && randomChoice == "papel")) {
-        _message = "Você ganhou!";
+      // Usa a GameLogic para obter o resultado
+      String result = GameLogic.getResult(choice, randomChoice);
+      if (result == "Você ganhou!") {
+        _message = result;
         _messageColor = const Color.fromARGB(255, 16, 117, 20);
         _playerScore++;
-      } else if ((choice == "tesoura" && randomChoice == "pedra") ||
-          (choice == "pedra" && randomChoice == "papel") ||
-          (choice == "papel" && randomChoice == "tesoura")) {
-        _message = "Você perdeu!";
+      } else if (result == "Você perdeu!") {
+        _message = result;
         _messageColor = const Color.fromARGB(255, 245, 29, 13);
         _computerScore++;
       } else {
@@ -77,79 +78,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => _play("pedra"),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("images/moldura.png"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child: Image.asset("images/pedra.png", height: 100),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            "Pedra",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => _play("papel"),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("images/moldura.png"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child: Image.asset("images/papel.png", height: 100),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            "Papel",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => _play("tesoura"),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("images/moldura.png"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child:
-                                Image.asset("images/tesoura.png", height: 100),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            "Tesoura",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+
+                // Usa o componente GameButtons
+                GameButtons(
+                  options: options,
+                  onTap: _play,
                 ),
+
                 Padding(
                   padding: EdgeInsets.only(top: 32, bottom: 16),
                   child: Text(
@@ -170,6 +105,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
+
                 Padding(
                   padding: EdgeInsets.only(top: 32, bottom: 16),
                   child: Text(
@@ -180,17 +116,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 16, bottom: 16),
-                  child: Text(
-                    _message,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: _messageColor,
-                    ),
-                  ),
+
+                // Usa o componente ResultMessage
+                ResultMessage(
+                  message: _message,
+                  color: _messageColor,
                 ),
+
                 Padding(
                   padding: EdgeInsets.only(top: 32, bottom: 16),
                   child: Text(
@@ -201,44 +133,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          "Jogador",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                        Text(
-                          _playerScore.toString(),
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Computador",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                        Text(
-                          _computerScore.toString(),
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+
+                // Usa o componente ScoreDisplay
+                ScoreDisplay(
+                  playerScore: _playerScore,
+                  computerScore: _computerScore,
                 ),
               ],
             ),
